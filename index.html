@@ -747,94 +747,94 @@
 <script>
 const questions = [
   {
-    q: "¿Qué profesional se encarga específicamente de la interfaz y lo que el usuario ve en una web?",
+    q: "¿Qué profesional se encarga principalmente de desarrollar la interfaz con la que interactúa el usuario en una aplicación web?",
     opts: ["Diseñador UX/UI","Backend Developer","Frontend Developer","Fullstack Developer"],
     correct: 2,
-    why: "El Frontend Developer desarrolla la parte visual de una página o aplicación web, es decir, los elementos con los que el usuario interactúa como botones, menús, formularios y diseño."
+    why: "El Frontend Developer programa la parte visual de la aplicación que el usuario ve y utiliza, implementando interfaces mediante tecnologías como HTML, CSS y JavaScript."
   },
   {
-    q: "¿Qué hace principalmente un Backend Developer?",
-    opts: ["Diseñar la experiencia de usuario","Manejar la lógica del servidor, bases de datos y APIs","Optimizar el diseño visual de la aplicación","Crear prototipos de interfaz"],
+    q: "¿Cuál es la principal responsabilidad de un Backend Developer en una aplicación?",
+    opts: ["Diseñar prototipos de interfaz","Gestionar la lógica del servidor, bases de datos y APIs","Diseñar la identidad visual del sistema","Definir la experiencia de usuario"],
     correct: 1,
-    why: "El Backend Developer se encarga del funcionamiento interno del sistema, gestionando la lógica del servidor, el acceso a las bases de datos y la comunicación entre la aplicación y otros servicios."
+    why: "El Backend Developer desarrolla la parte del sistema que funciona en el servidor, encargándose de procesar la información y gestionar la comunicación con las bases de datos."
   },
   {
-    q: "¿Qué significa ser un desarrollador Fullstack?",
-    opts: ["Domina tanto el Frontend como el Backend","Especializarse en el diseño de interfaces","Programar únicamente aplicaciones móviles","Trabajar solo con bases de datos"],
-    correct: 0,
-    why: "Un Fullstack Developer tiene conocimientos tanto de la parte visual (frontend) como de la parte interna del sistema (backend), lo que le permite desarrollar aplicaciones completas."
+    q: "¿Qué caracteriza a un desarrollador Fullstack?",
+    opts: ["Se especializa en el análisis de datos","Desarrolla tanto la parte visual como la lógica del sistema","Diseña únicamente la experiencia de usuario","Administra infraestructuras tecnológicas"],
+    correct: 1,
+    why: "Un Fullstack Developer tiene conocimientos tanto de frontend como de backend, por lo que puede trabajar en diferentes partes del desarrollo de una aplicación."
   },
   {
-    q: "¿Qué profesional se enfoca en encontrar errores y asegurar la calidad del software?",
-    opts: ["Analista de Sistemas","Project Manager","QA Tester","Arquitecto de Software"],
+    q: "¿Qué profesional tiene como objetivo principal verificar que un software funcione correctamente y detectar fallos antes de su lanzamiento?",
+    opts: ["Analista de Sistemas","Arquitecto de Software","QA Tester","Ingeniero DevOps"],
     correct: 2,
-    why: "El QA Tester prueba el software para detectar errores o fallos antes de que el producto sea lanzado, asegurando que funcione correctamente."
+    why: "El QA Tester realiza pruebas para identificar errores o problemas en el software y asegurar que el producto funcione correctamente antes de ser utilizado por los usuarios."
   },
   {
-    q: "Si trabajas creando videojuegos con motores como Unity o Unreal Engine, eres un:",
-    opts: ["Ingeniero de Software","Desarrollador de Videojuegos","Ingeniero de Simulación","Diseñador UX/UI"],
-    correct: 1,
-    why: "Los desarrolladores de videojuegos utilizan motores de desarrollo como Unity o Unreal Engine para programar la lógica, los personajes, las físicas y la interacción dentro de un videojuego."
-  },
-  {
-    q: "¿Qué profesional analiza grandes volúmenes de datos para encontrar patrones y predicciones?",
-    opts: ["Ingeniero de Datos","Analista de Sistemas","Data Scientist","Desarrollador Backend"],
+    q: "¿Cómo se denomina al profesional que desarrolla videojuegos utilizando motores como Unity o Unreal Engine?",
+    opts: ["Ingeniero de Software","Ingeniero de Simulación","Desarrollador de Videojuegos","Diseñador de Interacción"],
     correct: 2,
-    why: "El Data Scientist analiza grandes cantidades de datos utilizando estadísticas y algoritmos para encontrar patrones y generar predicciones útiles."
+    why: "El Desarrollador de Videojuegos utiliza motores como Unity o Unreal Engine para programar mecánicas, físicas e interacción dentro de los videojuegos."
   },
   {
-    q: "¿Qué hace un Ingeniero de Machine Learning?",
-    opts: ["Crear algoritmos que permiten a las máquinas aprender de los datos","Diseñar la arquitectura de una aplicación web","Administrar bases de datos empresariales","Desarrollar interfaces de usuario"],
-    correct: 0,
-    why: "El Ingeniero de Machine Learning desarrolla modelos y algoritmos que permiten a las computadoras aprender automáticamente a partir de datos."
-  },
-  {
-    q: "¿Qué profesional construye las 'tuberías' para transportar y preparar datos?",
-    opts: ["Ingeniero DevOps","Analista de BI","Científico de Datos","Data Engineer"],
-    correct: 3,
-    why: "El Data Engineer diseña y mantiene la infraestructura que permite recolectar, transformar y mover los datos para que puedan ser analizados."
-  },
-  {
-    q: "¿Qué rol transforma datos en gráficos y reportes para ayudar a tomar decisiones empresariales?",
-    opts: ["Ingeniero de Datos","Analista de BI (Business Intelligence)","Científico de Datos","Arquitecto de Software"],
-    correct: 1,
-    why: "El Analista de BI utiliza herramientas de visualización y análisis para convertir datos en gráficos, informes y paneles que facilitan la toma de decisiones."
-  },
-  {
-    q: "¿En qué consiste el Trading Algorítmico?",
-    opts: ["Analizar manualmente los mercados financieros","Crear algoritmos que compran y venden en la bolsa automáticamente","Desarrollar plataformas de comercio electrónico","Diseñar aplicaciones de banca digital"],
-    correct: 1,
-    why: "El trading algorítmico utiliza programas informáticos que ejecutan automáticamente operaciones de compra y venta en los mercados financieros basándose en algoritmos."
-  },
-  {
-    q: "¿Qué profesional se encarga de proteger la información de una empresa contra ataques?",
-    opts: ["Ingeniero de Redes","Administrador de Sistemas","Analista de Seguridad","Arquitecto de Software"],
+    q: "¿Qué profesional se especializa en analizar grandes conjuntos de datos para encontrar patrones y generar predicciones?",
+    opts: ["Data Engineer","Analista de BI","Data Scientist","Ingeniero de Software"],
     correct: 2,
-    why: "El Analista de Seguridad se encarga de proteger los sistemas informáticos, redes y datos de posibles ataques o accesos no autorizados."
+    why: "El Data Scientist utiliza estadísticas, programación y modelos matemáticos para analizar datos y obtener información útil o predicciones."
   },
   {
-    q: "¿Qué hace un Hacker Ético o Pentester?",
-    opts: ["Diseñar sistemas de autenticación","Atacar sistemas con permiso para encontrar vulnerabilidades","Administrar firewalls empresariales","Desarrollar software de seguridad"],
+    q: "¿Cuál es la función principal de un Ingeniero de Machine Learning?",
+    opts: ["Diseñar sistemas de almacenamiento de datos","Desarrollar modelos que permitan a las máquinas aprender de los datos","Administrar bases de datos empresariales","Diseñar la arquitectura de aplicaciones"],
     correct: 1,
-    why: "Un Hacker Ético o Pentester simula ataques informáticos autorizados para identificar vulnerabilidades y ayudar a mejorar la seguridad del sistema."
+    why: "El Ingeniero de Machine Learning crea algoritmos y modelos que permiten que las computadoras aprendan patrones a partir de datos."
   },
   {
-    q: "¿Cuál es el objetivo principal de la ciberseguridad?",
-    opts: ["Mejorar el rendimiento de los sistemas informáticos","Proteger sistemas, redes y datos de ataques informáticos","Diseñar aplicaciones seguras para empresas","Administrar infraestructuras tecnológicas"],
+    q: "¿Qué profesional se encarga de construir la infraestructura que permite recopilar, procesar y transportar datos para su análisis?",
+    opts: ["Analista de BI","Ingeniero DevOps","Data Engineer","Científico de Datos"],
+    correct: 2,
+    why: "El Data Engineer diseña sistemas y pipelines que permiten recolectar, transformar y almacenar datos para su posterior análisis."
+  },
+  {
+    q: "¿Qué rol se enfoca en convertir datos en reportes y visualizaciones para apoyar la toma de decisiones empresariales?",
+    opts: ["Ingeniero de Machine Learning","Analista de BI (Business Intelligence)","Científico de Datos","Arquitecto de Software"],
     correct: 1,
-    why: "La ciberseguridad busca proteger la información y los sistemas tecnológicos frente a amenazas como ataques informáticos, robo de datos o accesos no autorizados."
+    why: "El Analista de BI utiliza herramientas de análisis y visualización para transformar datos en información clara mediante gráficos y reportes."
   },
   {
-    q: "¿Qué evalúa un Auditor de Sistemas?",
-    opts: ["La eficiencia del código de un programa","El rendimiento de los servidores","La experiencia de usuario de una aplicación","Que los procesos tecnológicos cumplan normas y seguridad"],
-    correct: 3,
-    why: "El Auditor de Sistemas revisa que los procesos tecnológicos de una organización cumplan con normas, políticas de seguridad y regulaciones."
-  },
-  {
-    q: "¿Qué tipo de ataques busca prevenir la ciberseguridad?",
-    opts: ["Ataques informáticos como malware, phishing o robo de datos","Fallos en la arquitectura del software","Errores de programación en aplicaciones","Problemas de rendimiento en servidores"],
+    q: "¿Qué describe mejor el concepto de Trading Algorítmico?",
+    opts: ["Uso de algoritmos para ejecutar operaciones financieras automáticamente","Análisis predictivo de tendencias económicas con inteligencia artificial","Desarrollo de dashboards para visualizar datos del mercado en tiempo real","Diseño de aplicaciones de banca digital para usuarios finales"],
     correct: 0,
-    why: "La ciberseguridad protege los sistemas contra amenazas digitales como malware, phishing, ransomware y otros ataques que buscan robar o dañar información."
+    why: "El Trading Algorítmico utiliza programas informáticos que ejecutan operaciones de compra o venta en los mercados financieros basándose en algoritmos."
+  },
+  {
+    q: "¿Qué profesional tiene como función principal proteger los sistemas informáticos y la información frente a amenazas digitales?",
+    opts: ["Administrador de Sistemas","Ingeniero de Redes","Analista de Seguridad","Arquitecto de Software"],
+    correct: 2,
+    why: "El Analista de Seguridad implementa medidas para proteger los sistemas, redes y datos frente a ataques o accesos no autorizados."
+  },
+  {
+    q: "¿Cuál es la función principal de un Hacker Ético o Pentester?",
+    opts: ["Diseñar políticas de seguridad","Realizar pruebas de penetración para detectar vulnerabilidades en los sistemas","Administrar servidores empresariales","Desarrollar aplicaciones de seguridad"],
+    correct: 1,
+    why: "El Pentester simula ataques controlados para identificar debilidades en los sistemas antes de que puedan ser explotadas por atacantes reales."
+  },
+  {
+    q: "¿Cuál es el objetivo principal de la ciberseguridad dentro de una organización?",
+    opts: ["Proteger la información y los sistemas frente a amenazas digitales","Cifrar todas las comunicaciones entre los servidores de la empresa","Monitorear el rendimiento de los sistemas para detectar fallos técnicos","Gestionar los permisos y accesos de los empleados a los sistemas"],
+    correct: 0,
+    why: "La ciberseguridad busca garantizar la protección de los sistemas, redes y datos frente a ataques o accesos no autorizados."
+  },
+  {
+    q: "¿Qué aspecto revisa principalmente un Auditor de Sistemas dentro de una organización?",
+    opts: ["La eficiencia del código del software","El cumplimiento de normas, controles y políticas tecnológicas","El diseño de las interfaces de las aplicaciones","El rendimiento de los servidores"],
+    correct: 1,
+    why: "El Auditor de Sistemas evalúa si los procesos tecnológicos cumplen con normas, políticas de seguridad y regulaciones."
+  },
+  {
+    q: "¿Qué tipo de situaciones intenta prevenir la ciberseguridad en una organización?",
+    opts: ["Accesos no autorizados, robo de datos o ataques informáticos","Vulnerabilidades en el código fuente de las aplicaciones","Caídas de servidores por sobrecarga de tráfico","Pérdida de datos por fallos en el hardware"],
+    correct: 0,
+    why: "La ciberseguridad busca evitar amenazas que comprometan la confidencialidad, integridad y disponibilidad de la información."
   }
 ];
 
