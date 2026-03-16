@@ -748,93 +748,93 @@
 const questions = [
   {
     q: "¿Qué profesional se encarga específicamente de la interfaz y lo que el usuario ve en una web?",
-    opts: ["Backend Developer","Data Scientist","Frontend Developer","Data Engineer"],
-    correct: 2,
-    why: "El 'Frontend' se refiere a la parte del software que interactúa directamente con el usuario final."
+    opts: ["Backend Developer","Frontend Developer","Diseñador UX/UI","Fullstack Developer"],
+    correct: 1,
+    why: "El Frontend se encarga de la parte visual de una página web, es decir, lo que el usuario ve y con lo que interactúa."
   },
   {
-    q: "Si te apasiona entrenar algoritmos para que 'aprendan' solos, ¿qué rol deberías elegir?",
-    opts: ["QA Tester","Project Manager","Ingeniero de Machine Learning","Administrador de Redes"],
-    correct: 2,
-    why: "El Machine Learning es la rama de la IA dedicada a crear sistemas que aprenden de los datos."
+    q: "¿Qué hace principalmente un Backend Developer?",
+    opts: ["Diseñar la experiencia del usuario","Manejar la lógica del servidor, bases de datos y APIs","Optimizar el diseño visual de la aplicación","Crear prototipos de interfaz"],
+    correct: 1,
+    why: "El Backend se encarga de la parte interna del sistema, donde funcionan la lógica del servidor, las bases de datos y la comunicación con la aplicación."
   },
   {
-    q: "¿Cuál es la función principal de un QA (Quality Assurance) Tester?",
-    opts: ["Escribir el código inicial","Diseñar logos","Encontrar errores y asegurar la calidad","Vender el software"],
-    correct: 2,
-    why: "Su objetivo es 'asegurar' que el producto funcione correctamente antes de lanzarlo."
+    q: "¿Qué significa ser un desarrollador Fullstack?",
+    opts: ["Especializarse solo en bases de datos","Dominar tanto el Frontend como el Backend","Programar únicamente aplicaciones móviles","Diseñar interfaces y experiencia de usuario"],
+    correct: 1,
+    why: "Un desarrollador Fullstack puede trabajar tanto en la parte visual de una aplicación como en la lógica del servidor."
   },
   {
-    q: "¿Qué perfil actúa como puente entre el desarrollo y las operaciones para automatizar procesos?",
-    opts: ["DevOps Engineer","UX Designer","Bioinformático","Auditor de Sistemas"],
+    q: "¿Qué profesional se enfoca en encontrar errores y asegurar la calidad del software?",
+    opts: ["DevOps Engineer","QA Tester","Analista de Sistemas","Arquitecto de Software"],
+    correct: 1,
+    why: "El QA Tester prueba el software para encontrar errores antes de que el producto sea entregado a los usuarios."
+  },
+  {
+    q: "Si trabajas creando videojuegos con motores como Unity o Unreal Engine, eres un:",
+    opts: ["Ingeniero de Software Embebido","Desarrollador de Videojuegos","Ingeniero de Simulación","Diseñador de Experiencia de Usuario"],
+    correct: 1,
+    why: "Los motores como Unity o Unreal Engine se utilizan para desarrollar videojuegos interactivos."
+  },
+  {
+    q: "¿Qué profesional analiza grandes volúmenes de datos para encontrar patrones y predicciones?",
+    opts: ["Ingeniero de Datos","Data Scientist","Analista de Sistemas","Ingeniero de Software"],
+    correct: 1,
+    why: "El Data Scientist analiza datos para descubrir patrones y ayudar a tomar decisiones basadas en información."
+  },
+  {
+    q: "¿Qué hace un Ingeniero de Machine Learning?",
+    opts: ["Diseñar bases de datos empresariales","Crea algoritmos que permiten a las máquinas aprender de los datos","Analizar el comportamiento de los usuarios en aplicaciones","Administrar servidores en la nube"],
+    correct: 1,
+    why: "El Machine Learning permite crear sistemas que aprenden automáticamente a partir de datos."
+  },
+  {
+    q: "¿Qué profesional construye las 'tuberías' para transportar y preparar datos?",
+    opts: ["Analista de BI","Data Engineer","Científico de Datos","Ingeniero DevOps"],
+    correct: 1,
+    why: "El Data Engineer crea la infraestructura que permite recolectar, organizar y transportar los datos para su análisis."
+  },
+  {
+    q: "¿Qué rol transforma datos en gráficos y reportes para ayudar a tomar decisiones empresariales?",
+    opts: ["Analista de BI (Business Intelligence)","Ingeniero de Datos","Científico de Datos","Analista de Sistemas"],
     correct: 0,
-    why: "DevOps combina 'Development' (Desarrollo) y 'Operations' (Operaciones) para agilizar el ciclo de vida del software."
+    why: "El Analista de BI convierte datos en visualizaciones e informes que ayudan a las empresas a tomar decisiones."
   },
   {
-    q: "El profesional que diseña la estructura técnica compleja de un sistema completo es el:",
-    opts: ["Technical Writer","Arquitecto de Soluciones","Fullstack Developer","Analista de BI"],
+    q: "¿En qué consiste el Trading Algorítmico?",
+    opts: ["Analizar manualmente los mercados financieros","Crear algoritmos que compran y venden en la bolsa automáticamente","Diseñar plataformas de comercio electrónico","Desarrollar aplicaciones bancarias"],
     correct: 1,
-    why: "El arquitecto es quien decide los 'planos' y componentes que sostendrán toda la aplicación."
+    why: "El trading algorítmico usa programas informáticos para realizar operaciones financieras de forma automática."
   },
   {
-    q: "¿Quién se encarga de proteger la información de una empresa contra ataques externos?",
-    opts: ["Product Owner","Analista de Seguridad","Data Scientist","Frontend Developer"],
+    q: "¿Qué profesional se encarga de proteger la información de una empresa contra ataques?",
+    opts: ["Ingeniero de Redes","Analista de Seguridad","Administrador de Sistemas","Arquitecto de Soluciones"],
     correct: 1,
-    why: "Su enfoque principal es la protección de activos digitales y la prevención de intrusiones."
+    why: "El Analista de Seguridad protege sistemas, redes y datos contra ataques informáticos."
   },
   {
-    q: "¿Qué área mezcla la biología con el código para investigar genética?",
-    opts: ["Fintech","IoT","Bioinformática","Blockchain"],
-    correct: 2,
-    why: "Es la aplicación de herramientas computacionales para analizar datos biológicos."
-  },
-  {
-    q: "Si trabajas en 'Sistemas Embebidos', ¿qué estarías programando?",
-    opts: ["Una página web de noticias","El chip de un motor o un electrodoméstico","Una base de datos en la nube","Un videojuego de realidad virtual"],
+    q: "¿Qué hace un Hacker Ético o Pentester?",
+    opts: ["Diseñar sistemas de autenticación","Ataca sistemas con permiso para encontrar vulnerabilidades","Desarrollar software de seguridad","Administrar firewalls de red"],
     correct: 1,
-    why: "Los sistemas embebidos son computadoras de propósito específico integradas dentro de otros dispositivos."
+    why: "Un hacker ético busca fallos de seguridad en los sistemas para ayudar a corregirlos antes de que sean explotados."
   },
   {
-    q: "¿Qué hace un 'Hacker Ético' o Pentester?",
-    opts: ["Robar contraseñas para beneficio propio","Atacar sistemas con permiso para hallar vulnerabilidades","Arreglar computadoras dañadas","Crear virus para vender antivirus"],
+    q: "¿Cuál es el objetivo principal de la ciberseguridad?",
+    opts: ["Mejorar el rendimiento de los servidores","Proteger sistemas, redes y datos de ataques informáticos","Diseñar aplicaciones web seguras","Administrar bases de datos empresariales"],
     correct: 1,
-    why: "Utiliza técnicas de ataque para ayudar a las empresas a fortalecer su seguridad."
+    why: "La ciberseguridad busca proteger la información y los sistemas tecnológicos de accesos no autorizados."
   },
   {
-    q: "¿Cuál es el rol del 'Product Owner'?",
-    opts: ["Escribir toda la documentación técnica","Decidir qué funciones son prioridad según el negocio","Configurar los servidores de AWS","Instalar el sistema operativo en las laptops de la oficina"],
+    q: "¿Qué evalúa un Auditor de Sistemas?",
+    opts: ["La eficiencia del código de un software","Que los procesos tecnológicos cumplan normas y seguridad","El rendimiento de los servidores","La experiencia de usuario de una aplicación"],
     correct: 1,
-    why: "Representa la 'voz del cliente' y prioriza el trabajo que genera más valor."
+    why: "El Auditor de Sistemas verifica que los procesos tecnológicos cumplan con normas de seguridad y regulaciones."
   },
   {
-    q: "¿Qué profesional transforma datos crudos en gráficos para la toma de decisiones?",
-    opts: ["Desarrollador Mobile","Analista de BI (Business Intelligence)","Cloud Engineer","Técnico de redes"],
-    correct: 1,
-    why: "BI se enfoca en la visualización y análisis de datos históricos para la estrategia empresarial."
-  },
-  {
-    q: "¿Qué significa ser un desarrollador 'Fullstack'?",
-    opts: ["Que solo sabe usar bases de datos","Que domina tanto el Frontend como el Backend","Que es experto en hardware de servidores","Que solo desarrolla aplicaciones para iPhone"],
-    correct: 1,
-    why: "Un 'stack' completo incluye la parte visual y la parte lógica de una aplicación."
-  },
-  {
-    q: "Si te dedicas al 'Trading Algorítmico', trabajas en el sector:",
-    opts: ["Salud","Financiero","Educativo","Videojuegos"],
-    correct: 1,
-    why: "Consiste en usar algoritmos para operar automáticamente en mercados de valores."
-  },
-  {
-    q: "¿Quién es responsable de que el software sea intuitivo, fácil y bonito para el usuario?",
-    opts: ["Data Engineer","Diseñador UX/UI","Auditor de Sistemas","Technical Writer"],
-    correct: 1,
-    why: "UX (Experiencia) y UI (Interfaz) se centran en la interacción humana con el producto."
-  },
-  {
-    q: "¿Qué hace un 'Data Engineer'?",
-    opts: ["Diseña logos para apps de datos","Construye las 'tuberías' y limpieza de datos","Entrevista a los usuarios finales","Repara cables de fibra óptica"],
-    correct: 1,
-    why: "Se encarga de la infraestructura necesaria para que los datos lleguen correctamente a los analistas."
+    q: "¿Qué tipo de ataques busca prevenir la ciberseguridad?",
+    opts: ["Ataques informáticos como malware, phishing o robo de datos","Errores de programación en aplicaciones","Fallos en el diseño de interfaces","Problemas de compatibilidad entre sistemas"],
+    correct: 0,
+    why: "La ciberseguridad protege contra amenazas digitales que pueden comprometer sistemas y datos."
   }
 ];
 
