@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz · Ingeniería de Sistemas</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a14;
+    --surface: #0d1b2e;
+    --surface2: #0f2040;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --danger: #ef4444;
+    --text: #e2f0ff;
+    --text-dim: #6b8caa;
+    --border: rgba(0,229,255,0.15);
+    --glow: 0 0 20px rgba(0,229,255,0.3);
+    --glow-strong: 0 0 40px rgba(0,229,255,0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Floating orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    animation: float 8s ease-in-out infinite;
+  }
+  .orb1 { width: 400px; height: 400px; background: rgba(124,58,237,0.15); top: -100px; right: -100px; }
+  .orb2 { width: 300px; height: 300px; background: rgba(0,229,255,0.1); bottom: -50px; left: -80px; animation-delay: -4s; }
+  .orb3 { width: 200px; height: 200px; background: rgba(16,185,129,0.08); top: 50%; left: 50%; animation-delay: -2s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  /* ---- SCREENS ---- */
+  .screen {
+    display: none;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .screen.active { display: flex; }
+
+  /* ---- INTRO SCREEN ---- */
+  .intro-badge {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    border: 1px solid var(--accent);
+    padding: 6px 18px;
+    border-radius: 30px;
+    margin-bottom: 28px;
+    box-shadow: var(--glow);
+    animation: pulse-border 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 10px rgba(0,229,255,0.2); }
+    50% { box-shadow: 0 0 25px rgba(0,229,255,0.5); }
+  }
+
+  .intro-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(28px, 6vw, 64px);
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 30%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .intro-subtitle {
+    font-size: clamp(14px, 2.5vw, 20px);
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .intro-stats {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-box::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,229,255,0.05), transparent);
+    pointer-events: none;
+  }
+  .stat-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .btn-start {
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 20px 60px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 30px rgba(0,229,255,0.3);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .btn-start::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.4s;
+  }
+  .btn-start:hover::before, .btn-start:active::before { left: 100%; }
+  .btn-start:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,229,255,0.5); }
+  .btn-start:active { transform: scale(0.97); }
+
+  /* ---- QUIZ SCREEN ---- */
+  #quiz-screen {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 20px;
+    justify-content: flex-start;
+    padding-top: 30px;
+  }
+
+  /* Header */
+  .quiz-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .q-counter {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--accent);
+  }
+
+  .score-display {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+  }
+  .score-display span { color: var(--accent3); }
+
+  /* Progress bar */
+  .progress-track {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 4px;
+    transition: width 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 0 12px rgba(0,229,255,0.5);
+  }
+
+  /* Question card */
+  .question-card {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: clamp(24px, 4vw, 40px);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    animation: card-in 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent2));
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .q-number-chip {
+    display: inline-block;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--accent);
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+
+  .question-text {
+    font-size: clamp(17px, 3vw, 24px);
+    font-weight: 600;
+    line-height: 1.5;
+    color: #fff;
+  }
+
+  /* Options */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  .option-btn {
+    background: var(--surface);
+    border: 2px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 18px 20px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    animation: opt-in 0.3s ease both;
+  }
+
+  .option-btn:nth-child(1) { animation-delay: 0.05s; }
+  .option-btn:nth-child(2) { animation-delay: 0.10s; }
+  .option-btn:nth-child(3) { animation-delay: 0.15s; }
+  .option-btn:nth-child(4) { animation-delay: 0.20s; }
+
+  @keyframes opt-in {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: rgba(0,229,255,0.4);
+    background: rgba(0,229,255,0.06);
+    transform: translateX(4px);
+    box-shadow: -4px 0 20px rgba(0,229,255,0.15);
+  }
+  .option-btn:active:not(:disabled) { transform: scale(0.98); }
+
+  .option-btn.selected {
+    border-color: var(--accent);
+    background: rgba(0,229,255,0.08);
+    box-shadow: var(--glow);
+  }
+  .option-btn.correct {
+    border-color: var(--accent3) !important;
+    background: rgba(16,185,129,0.12) !important;
+    box-shadow: 0 0 20px rgba(16,185,129,0.3) !important;
+    animation: correct-flash 0.4s ease;
+  }
+  .option-btn.wrong {
+    border-color: var(--danger) !important;
+    background: rgba(239,68,68,0.1) !important;
+    box-shadow: 0 0 20px rgba(239,68,68,0.2) !important;
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes correct-flash {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+  .option-btn:disabled { cursor: default; }
+
+  .opt-letter {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    transition: all 0.2s;
+  }
+  .option-btn.selected .opt-letter { background: var(--accent); color: #000; border-color: var(--accent); }
+  .option-btn.correct .opt-letter  { background: var(--accent3); color: #000; border-color: var(--accent3); }
+  .option-btn.wrong .opt-letter    { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+  .opt-text {
+    font-size: clamp(13px, 2vw, 16px);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  /* Explanation box */
+  .explanation-box {
+    width: 100%;
+    background: rgba(16,185,129,0.07);
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    display: none;
+    animation: slide-up 0.3s ease;
+  }
+  .explanation-box.show-wrong {
+    background: rgba(239,68,68,0.07);
+    border-color: rgba(239,68,68,0.25);
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .explanation-box.visible { display: block; }
+
+  .exp-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .exp-icon { font-size: 20px; }
+  .exp-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent3);
+  }
+  .explanation-box.show-wrong .exp-title { color: var(--danger); }
+  .exp-text {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Action buttons */
+  .action-row {
+    width: 100%;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-check {
+    flex: 1;
+    min-width: 160px;
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, var(--accent2), #6366f1);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    box-shadow: 0 6px 20px rgba(124,58,237,0.3);
+  }
+  .btn-check:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(124,58,237,0.5); }
+  .btn-check:active { transform: scale(0.97); }
+  .btn-check:disabled { opacity: 0.4; cursor: default; }
+
+  .btn-next {
+    flex: 1;
+    min-width: 160px;
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, var(--accent), #0891b2);
+    color: #000;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    display: none;
+    box-shadow: 0 6px 20px rgba(0,229,255,0.3);
+  }
+  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,229,255,0.5); }
+  .btn-next:active { transform: scale(0.97); }
+  .btn-next.visible { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+  /* ---- RESULT SCREEN ---- */
+  #result-screen {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    gap: 0;
+  }
+
+  .result-emoji {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounce-in 0.6s cubic-bezier(0.34,1.56,0.64,1);
+    display: block;
+  }
+  @keyframes bounce-in {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .result-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(22px, 5vw, 42px);
+    font-weight: 900;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .result-subtitle {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+  }
+
+  .score-ring-container {
+    margin: 0 auto 36px;
+    position: relative;
+    width: 180px;
+    height: 180px;
+  }
+
+  .score-ring {
+    transform: rotate(-90deg);
+    width: 180px;
+    height: 180px;
+  }
+
+  .ring-bg { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 12; }
+  .ring-fill {
+    fill: none;
+    stroke: url(#ringGrad);
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 502;
+    stroke-dashoffset: 502;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.34,1.2,0.64,1) 0.3s;
+  }
+
+  .score-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .score-fraction {
+    font-family: 'Orbitron', monospace;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+  .score-label-ring { font-size: 11px; color: var(--text-dim); letter-spacing: 2px; margin-top: 4px; display: block; }
+
+  .result-grade {
+    font-family: 'Orbitron', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 14px 40px;
+    border-radius: 50px;
+    margin-bottom: 36px;
+    display: inline-block;
+  }
+
+  .breakdown {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .break-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 30px;
+    text-align: center;
+  }
+  .break-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 32px;
+    font-weight: 900;
+    display: block;
+  }
+  .break-num.green { color: var(--accent3); }
+  .break-num.red   { color: var(--danger); }
+  .break-label { font-size: 11px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; display: block; }
+
+  .btn-restart {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 18px 50px;
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .btn-restart:hover { background: rgba(0,229,255,0.1); box-shadow: var(--glow); transform: translateY(-2px); }
+  .btn-restart:active { transform: scale(0.97); }
+
+  /* Celebration particles */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 999;
+    animation: confetti-fall var(--dur) ease-in var(--delay) forwards;
+  }
+  @keyframes confetti-fall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<!-- INTRO SCREEN -->
+<div class="screen active" id="intro-screen">
+  <div class="intro-badge">⚡ Orientación Profesional</div>
+  <h1 class="intro-title">Ingeniería<br>de Sistemas</h1>
+  <p class="intro-subtitle">¿Qué rol del mundo tech eres tú?</p>
+  <div class="intro-stats">
+    <div class="stat-box">
+      <span class="stat-number">15</span>
+      <span class="stat-label">Preguntas</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number">4</span>
+      <span class="stat-label">Opciones</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Posibilidades</span>
+    </div>
+  </div>
+  <button class="btn-start" onclick="startQuiz()">INICIAR QUIZ</button>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div class="screen" id="quiz-screen">
+  <div class="quiz-header">
+    <div class="q-counter">PREGUNTA <span id="q-current">1</span> / 15</div>
+    <div class="score-display">PUNTOS: <span id="live-score">0</span></div>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+  </div>
+
+  <div class="question-card" id="question-card">
+    <div class="q-number-chip" id="q-chip">PREGUNTA 01</div>
+    <p class="question-text" id="question-text"></p>
+  </div>
+
+  <div class="options-grid" id="options-grid"></div>
+
+  <div class="explanation-box" id="explanation-box">
+    <div class="exp-header">
+      <span class="exp-icon" id="exp-icon">💡</span>
+      <span class="exp-title" id="exp-title">EXPLICACIÓN</span>
+    </div>
+    <p class="exp-text" id="exp-text"></p>
+  </div>
+
+  <div class="action-row">
+    <button class="btn-check" id="btn-check" onclick="checkAnswer()" disabled>✦ VERIFICAR</button>
+    <button class="btn-next visible" id="btn-next" onclick="nextQuestion()" style="display:none">SIGUIENTE →</button>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="screen" id="result-screen">
+  <span class="result-emoji" id="result-emoji">🏆</span>
+  <h2 class="result-title" id="result-title">¡Excelente!</h2>
+  <p class="result-subtitle" id="result-subtitle">Terminaste el quiz</p>
+
+  <div class="score-ring-container">
+    <svg class="score-ring" viewBox="0 0 180 180">
+      <defs>
+        <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#7c3aed"/>
+          <stop offset="100%" style="stop-color:#00e5ff"/>
+        </linearGradient>
+      </defs>
+      <circle class="ring-bg" cx="90" cy="90" r="80"/>
+      <circle class="ring-fill" id="ring-fill" cx="90" cy="90" r="80"/>
+    </svg>
+    <div class="score-center">
+      <span class="score-fraction" id="score-fraction">0/15</span>
+      <span class="score-label-ring">CORRECTAS</span>
+    </div>
+  </div>
+
+  <div class="result-grade" id="result-grade"></div>
+
+  <div class="breakdown">
+    <div class="break-item">
+      <span class="break-num green" id="break-correct">0</span>
+      <span class="break-label">Correctas</span>
+    </div>
+    <div class="break-item">
+      <span class="break-num red" id="break-wrong">0</span>
+      <span class="break-label">Incorrectas</span>
+    </div>
+    <div class="break-item">
+      <span class="break-num" id="break-pct" style="color:var(--accent)">0%</span>
+      <span class="break-label">Puntaje</span>
+    </div>
+  </div>
+
+  <button class="btn-restart" onclick="restartQuiz()">↺ JUGAR DE NUEVO</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "¿Qué profesional se encarga específicamente de la interfaz y lo que el usuario ve en una web?",
+    opts: ["Backend Developer","Data Scientist","Frontend Developer","Data Engineer"],
+    correct: 2,
+    why: "El 'Frontend' se refiere a la parte del software que interactúa directamente con el usuario final."
+  },
+  {
+    q: "Si te apasiona entrenar algoritmos para que 'aprendan' solos, ¿qué rol deberías elegir?",
+    opts: ["QA Tester","Project Manager","Ingeniero de Machine Learning","Administrador de Redes"],
+    correct: 2,
+    why: "El Machine Learning es la rama de la IA dedicada a crear sistemas que aprenden de los datos."
+  },
+  {
+    q: "¿Cuál es la función principal de un QA (Quality Assurance) Tester?",
+    opts: ["Escribir el código inicial","Diseñar logos","Encontrar errores y asegurar la calidad","Vender el software"],
+    correct: 2,
+    why: "Su objetivo es 'asegurar' que el producto funcione correctamente antes de lanzarlo."
+  },
+  {
+    q: "¿Qué perfil actúa como puente entre el desarrollo y las operaciones para automatizar procesos?",
+    opts: ["DevOps Engineer","UX Designer","Bioinformático","Auditor de Sistemas"],
+    correct: 0,
+    why: "DevOps combina 'Development' (Desarrollo) y 'Operations' (Operaciones) para agilizar el ciclo de vida del software."
+  },
+  {
+    q: "El profesional que diseña la estructura técnica compleja de un sistema completo es el:",
+    opts: ["Technical Writer","Arquitecto de Soluciones","Fullstack Developer","Analista de BI"],
+    correct: 1,
+    why: "El arquitecto es quien decide los 'planos' y componentes que sostendrán toda la aplicación."
+  },
+  {
+    q: "¿Quién se encarga de proteger la información de una empresa contra ataques externos?",
+    opts: ["Product Owner","Analista de Seguridad","Data Scientist","Frontend Developer"],
+    correct: 1,
+    why: "Su enfoque principal es la protección de activos digitales y la prevención de intrusiones."
+  },
+  {
+    q: "¿Qué área mezcla la biología con el código para investigar genética?",
+    opts: ["Fintech","IoT","Bioinformática","Blockchain"],
+    correct: 2,
+    why: "Es la aplicación de herramientas computacionales para analizar datos biológicos."
+  },
+  {
+    q: "Si trabajas en 'Sistemas Embebidos', ¿qué estarías programando?",
+    opts: ["Una página web de noticias","El chip de un motor o un electrodoméstico","Una base de datos en la nube","Un videojuego de realidad virtual"],
+    correct: 1,
+    why: "Los sistemas embebidos son computadoras de propósito específico integradas dentro de otros dispositivos."
+  },
+  {
+    q: "¿Qué hace un 'Hacker Ético' o Pentester?",
+    opts: ["Robar contraseñas para beneficio propio","Atacar sistemas con permiso para hallar vulnerabilidades","Arreglar computadoras dañadas","Crear virus para vender antivirus"],
+    correct: 1,
+    why: "Utiliza técnicas de ataque para ayudar a las empresas a fortalecer su seguridad."
+  },
+  {
+    q: "¿Cuál es el rol del 'Product Owner'?",
+    opts: ["Escribir toda la documentación técnica","Decidir qué funciones son prioridad según el negocio","Configurar los servidores de AWS","Instalar el sistema operativo en las laptops de la oficina"],
+    correct: 1,
+    why: "Representa la 'voz del cliente' y prioriza el trabajo que genera más valor."
+  },
+  {
+    q: "¿Qué profesional transforma datos crudos en gráficos para la toma de decisiones?",
+    opts: ["Desarrollador Mobile","Analista de BI (Business Intelligence)","Cloud Engineer","Técnico de redes"],
+    correct: 1,
+    why: "BI se enfoca en la visualización y análisis de datos históricos para la estrategia empresarial."
+  },
+  {
+    q: "¿Qué significa ser un desarrollador 'Fullstack'?",
+    opts: ["Que solo sabe usar bases de datos","Que domina tanto el Frontend como el Backend","Que es experto en hardware de servidores","Que solo desarrolla aplicaciones para iPhone"],
+    correct: 1,
+    why: "Un 'stack' completo incluye la parte visual y la parte lógica de una aplicación."
+  },
+  {
+    q: "Si te dedicas al 'Trading Algorítmico', trabajas en el sector:",
+    opts: ["Salud","Financiero","Educativo","Videojuegos"],
+    correct: 1,
+    why: "Consiste en usar algoritmos para operar automáticamente en mercados de valores."
+  },
+  {
+    q: "¿Quién es responsable de que el software sea intuitivo, fácil y bonito para el usuario?",
+    opts: ["Data Engineer","Diseñador UX/UI","Auditor de Sistemas","Technical Writer"],
+    correct: 1,
+    why: "UX (Experiencia) y UI (Interfaz) se centran en la interacción humana con el producto."
+  },
+  {
+    q: "¿Qué hace un 'Data Engineer'?",
+    opts: ["Diseña logos para apps de datos","Construye las 'tuberías' y limpieza de datos","Entrevista a los usuarios finales","Repara cables de fibra óptica"],
+    correct: 1,
+    why: "Se encarga de la infraestructura necesaria para que los datos lleguen correctamente a los analistas."
+  }
+];
+
+const letters = ['A','B','C','D'];
+let current = 0;
+let score = 0;
+let selected = null;
+let answered = false;
+
+function startQuiz() {
+  document.getElementById('intro-screen').classList.remove('active');
+  document.getElementById('quiz-screen').classList.add('active');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  selected = null;
+  answered = false;
+  const q = questions[current];
+  const pct = (current / 15) * 100;
+
+  document.getElementById('q-current').textContent = current + 1;
+  document.getElementById('q-chip').textContent = `PREGUNTA ${String(current+1).padStart(2,'0')}`;
+  document.getElementById('question-text').textContent = q.q;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('btn-check').disabled = true;
+
+  const expBox = document.getElementById('explanation-box');
+  expBox.classList.remove('visible','show-wrong');
+
+  const btnNext = document.getElementById('btn-next');
+  btnNext.style.display = 'none';
+
+  // Re-animate card
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'card-in 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+
+  // Render options
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span class="opt-text">${opt}</span>`;
+    btn.onclick = () => selectOption(i);
+    grid.appendChild(btn);
+  });
+}
+
+function selectOption(idx) {
+  if (answered) return;
+  selected = idx;
+  document.querySelectorAll('.option-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === idx);
+  });
+  document.getElementById('btn-check').disabled = false;
+}
+
+function checkAnswer() {
+  if (selected === null || answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.option-btn');
+  const isCorrect = selected === q.correct;
+
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add('correct');
+    else if (i === selected) btn.classList.add('wrong');
+  });
+
+  if (isCorrect) score++;
+  document.getElementById('live-score').textContent = score;
+
+  // Explanation
+  const expBox = document.getElementById('explanation-box');
+  document.getElementById('exp-icon').textContent = isCorrect ? '✅' : '❌';
+  document.getElementById('exp-title').textContent = isCorrect ? '¡CORRECTO!' : 'INCORRECTO';
+  document.getElementById('exp-text').textContent = q.why;
+  expBox.classList.add('visible');
+  if (!isCorrect) expBox.classList.add('show-wrong');
+
+  document.getElementById('btn-check').disabled = true;
+  const btnNext = document.getElementById('btn-next');
+  btnNext.style.display = 'flex';
+  btnNext.textContent = current < 14 ? 'SIGUIENTE →' : 'VER RESULTADO →';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= 15) {
+    showResults();
+  } else {
+    loadQuestion();
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz-screen').classList.remove('active');
+  document.getElementById('result-screen').classList.add('active');
+
+  const pct = Math.round((score / 15) * 100);
+  document.getElementById('score-fraction').textContent = `${score}/15`;
+  document.getElementById('break-correct').textContent = score;
+  document.getElementById('break-wrong').textContent = 15 - score;
+  document.getElementById('break-pct').textContent = pct + '%';
+
+  // Ring animation
+  const circumference = 2 * Math.PI * 80; // ≈ 502
+  const offset = circumference - (score / 15) * circumference;
+  setTimeout(() => {
+    document.getElementById('ring-fill').style.strokeDashoffset = offset;
+  }, 100);
+
+  // Grade
+  let emoji, title, subtitle, grade, gradeStyle;
+  if (pct === 100) {
+    emoji = '🏆'; title = '¡Perfecto!'; subtitle = 'Dominaste todos los roles del mundo tech.';
+    grade = '¡100% GENIO DEL CÓDIGO!'; gradeStyle = 'color:#00e5ff; border: 2px solid #00e5ff; box-shadow: 0 0 20px rgba(0,229,255,0.4)';
+    launchConfetti();
+  } else if (pct >= 80) {
+    emoji = '🚀'; title = '¡Excelente!'; subtitle = 'Tienes muy claro el camino en Ingeniería de Sistemas.';
+    grade = '✦ TALENTO TECH DETECTADO'; gradeStyle = 'color:#10b981; border: 2px solid #10b981; box-shadow: 0 0 20px rgba(16,185,129,0.3)';
+    launchConfetti();
+  } else if (pct >= 60) {
+    emoji = '💡'; title = '¡Muy bien!'; subtitle = 'Buen conocimiento. Sigue explorando tu ruta profesional.';
+    grade = '★ EN CAMINO AL ÉXITO'; gradeStyle = 'color:#f59e0b; border: 2px solid #f59e0b;';
+  } else if (pct >= 40) {
+    emoji = '📚'; title = 'Bien Intentado'; subtitle = 'Hay mucho campo por explorar. ¡Sigue aprendiendo!';
+    grade = '▸ APRENDIZ EN FORMACIÓN'; gradeStyle = 'color:#6b8caa; border: 2px solid #6b8caa;';
+  } else {
+    emoji = '🔧'; title = '¡A Practicar!'; subtitle = 'La Ingeniería de Sistemas tiene muchas ramas. ¡Explóralas!';
+    grade = '▸ INICIANDO BOOTCAMP'; gradeStyle = 'color:#ef4444; border: 2px solid #ef4444;';
+  }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-subtitle').textContent = subtitle;
+  const gradeEl = document.getElementById('result-grade');
+  gradeEl.textContent = grade;
+  gradeEl.style.cssText = gradeStyle;
+}
+
+function launchConfetti() {
+  const colors = ['#00e5ff','#7c3aed','#10b981','#f59e0b','#ef4444','#ffffff'];
+  for (let i = 0; i < 80; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `
+      left: ${Math.random()*100}vw;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      width: ${6 + Math.random()*10}px;
+      height: ${6 + Math.random()*10}px;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+      --dur: ${1.5 + Math.random()*2}s;
+      --delay: ${Math.random()*1.5}s;
+    `;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+}
+
+function restartQuiz() {
+  current = 0; score = 0; selected = null; answered = false;
+  document.getElementById('result-screen').classList.remove('active');
+  document.getElementById('intro-screen').classList.add('active');
+  document.getElementById('live-score').textContent = '0';
+  document.getElementById('ring-fill').style.strokeDashoffset = '502';
+}
+</script>
+</body>
+</html>
